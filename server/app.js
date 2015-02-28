@@ -12,7 +12,7 @@ var app = express();
 module.exports.app = app;
 
 // Set what we are listening on.
-app.set("port", 3000);
+app.set("port", 3001);
 
 // Logging and parsing
 app.use(morgan('dev'));
@@ -22,7 +22,7 @@ app.use(parser.json());
 app.use("/classes", router);
 
 // Serve the client files
-app.use(express.static(__dirname + "/../client"));
+app.use(express.static(__dirname + "/../2015-02-chatterbox-server/client"));
 
 // If we are being run directly, run the server.
 if (!module.parent) {
