@@ -2,14 +2,20 @@ var db = require('../db');
 
 module.exports = {
   messages: {
-    get: function () {
+    get: function (req, res) {
       var sql = "SELECT * FROM messages;";
-      db.dbConnection.query(sql);
-  //     [ { time: 'now', text: 'hello' },
-  //      { time: 'now', text: 'hello' } ]
+      db.dbConnection.query(sql, function(err, rows){
+        console.log(rows);
+        var data = {};
+        data.results = rows;
+        res.write(JSON.stringify(data));
+        res.status(200).send();
+      });
     }, // a function which produces all the messages
-    post: function () {
-      var sql = "INSERT INTO messages (time, text) values ('now', 'hello');";
+    post: function (data) {
+      var time = data._startTime;
+      var message = data.body.text;
+      var sql = "INSERT INTO messages (time, text) values ('" + time + "', '" + message + "');";
       db.dbConnection.query(sql);
     } // a function which can be used to insert a message into the database
   },
